@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نظام حساب الطاقة المتجددة</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container" id="main-menu">
+      <h1>نظام حساب الطاقة المتجددة</h1>
+
+      <div class="menu-buttons">
+        <button onclick="showSolarBuildingCalculator()">
+          1. حاسبة المبنى (طاقة شمسية)
+        </button>
+        <button onclick="showWindBuildingCalculator()">
+          2. حاسبة المبنى (طاقة الرياح)
+        </button>
+        <button onclick="showFeasibilityAnalysis()">
+          3. تحليل الجدوى الاقتصادية والبيئية
+        </button>
+      </div>
+    </div>
+
+    <!-- حاسبة المبنى (طاقة شمسية) -->
+    <div
+      class="container calculator-container"
+      id="solar-building-calculator"
+      style="display: none"
+    >
+      <h2>حاسبة متطلبات الطاقة الشمسية للمباني</h2>
+
+      <div class="input-section">
+        <div class="input-group">
+          <label for="solar-area">مساحة المبنى (م²):</label>
+          <input
+            type="number"
+            id="solar-area"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-floors')"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="solar-floors">عدد الأدوار:</label>
+          <input
+            type="number"
+            id="solar-floors"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-lights')"
+          />
+        </div>
+      </div>
+
+      <h3>عدد الأجهزة:</h3>
+      <div class="devices-grid">
+        <div class="device-group">
+          <label for="solar-lights">المصابيح:</label>
+          <input
+            type="number"
+            id="solar-lights"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-coffee')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="solar-coffee">ماكينات القهوة:</label>
+          <input
+            type="number"
+            id="solar-coffee"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-computers')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="solar-computers">أجهزة الكمبيوتر:</label>
+          <input
+            type="number"
+            id="solar-computers"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-printers')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="solar-printers">الطابعات:</label>
+          <input
+            type="number"
+            id="solar-printers"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-fridge')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="solar-fridge">الثلاجات:</label>
+          <input
+            type="number"
+            id="solar-fridge"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-fans')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="solar-fans">المراوح:</label>
+          <input
+            type="number"
+            id="solar-fans"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-ac')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="solar-ac">أجهزة التكييف:</label>
+          <input
+            type="number"
+            id="solar-ac"
+            class="input-field"
+            onkeypress="handleEnter(event, 'solar-other')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="solar-other">أحمال أخرى:</label>
+          <input
+            type="number"
+            id="solar-other"
+            class="input-field"
+            onkeypress="handleEnter(event, '', 'calculateSolarBuilding')"
+          />
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="calculateSolarBuilding()" class="calculate-btn">
+          حساب
+        </button>
+        <button onclick="showMainMenu()" class="back-btn">
+          العودة للقائمة الرئيسية
+        </button>
+      </div>
+    </div>
+
+    <!-- حاسبة المبنى (طاقة الرياح) -->
+    <div
+      class="container calculator-container"
+      id="wind-building-calculator"
+      style="display: none"
+    >
+      <h2>حاسبة متطلبات طاقة الرياح للمباني</h2>
+
+      <div class="input-section">
+        <div class="input-group">
+          <label for="wind-area">مساحة المبنى (م²):</label>
+          <input
+            type="number"
+            id="wind-area"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-floors')"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="wind-floors">عدد الأدوار:</label>
+          <input
+            type="number"
+            id="wind-floors"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-speed')"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="wind-speed">سرعة الرياح المتوسطة (م/ث):</label>
+          <input
+            type="number"
+            id="wind-speed"
+            class="input-field"
+            value="6.5"
+            onkeypress="handleEnter(event, 'wind-diameter')"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="wind-diameter">قطر التوربين (م):</label>
+          <input
+            type="number"
+            id="wind-diameter"
+            class="input-field"
+            value="3"
+            onkeypress="handleEnter(event, 'wind-lights')"
+          />
+        </div>
+      </div>
+
+      <h3>عدد الأجهزة:</h3>
+      <div class="devices-grid">
+        <div class="device-group">
+          <label for="wind-lights">المصابيح:</label>
+          <input
+            type="number"
+            id="wind-lights"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-coffee')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="wind-coffee">ماكينات القهوة:</label>
+          <input
+            type="number"
+            id="wind-coffee"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-computers')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="wind-computers">أجهزة الكمبيوتر:</label>
+          <input
+            type="number"
+            id="wind-computers"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-printers')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="wind-printers">الطابعات:</label>
+          <input
+            type="number"
+            id="wind-printers"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-fridge')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="wind-fridge">الثلاجات:</label>
+          <input
+            type="number"
+            id="wind-fridge"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-fans')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="wind-fans">المراوح:</label>
+          <input
+            type="number"
+            id="wind-fans"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-ac')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="wind-ac">أجهزة التكييف:</label>
+          <input
+            type="number"
+            id="wind-ac"
+            class="input-field"
+            onkeypress="handleEnter(event, 'wind-other')"
+          />
+        </div>
+
+        <div class="device-group">
+          <label for="wind-other">أحمال أخرى:</label>
+          <input
+            type="number"
+            id="wind-other"
+            class="input-field"
+            onkeypress="handleEnter(event, '', 'calculateWindBuilding')"
+          />
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="calculateWindBuilding()" class="calculate-btn">
+          حساب
+        </button>
+        <button onclick="showMainMenu()" class="back-btn">
+          العودة للقائمة الرئيسية
+        </button>
+      </div>
+    </div>
+
+    <!-- تحليل الجدوى الاقتصادية والبيئية -->
+    <div
+      class="container calculator-container"
+      id="feasibility-analysis"
+      style="display: none"
+    >
+      <h2>تحليل محطة طاقة متجددة - إدخال البيانات</h2>
+
+      <div class="input-section">
+        <div class="input-group">
+          <label for="station-capacity">قدرة المحطة (كيلوواط):</label>
+          <input
+            type="number"
+            id="station-capacity"
+            class="input-field"
+            onkeypress="handleEnter(event, 'station-cost')"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="station-cost">تكلفة المحطة (جنيه):</label>
+          <input
+            type="number"
+            id="station-cost"
+            class="input-field"
+            onkeypress="handleEnter(event, '', 'calculateStationResults')"
+          />
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="calculateStationResults()" class="calculate-btn">
+          حساب النتائج
+        </button>
+        <button onclick="showMainMenu()" class="back-btn">رجوع</button>
+      </div>
+    </div>
+
+    <!-- نتائج الحسابات -->
+    <div id="results-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="results-title"></h2>
+        <div id="results-content"></div>
+        <button
+          id="feasibility-btn"
+          class="feasibility-btn"
+          style="display: none"
+          onclick="showFeasibilityFromResults()"
+        >
+          تحليل الجدوى الاقتصادية
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
