@@ -3,353 +3,559 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>نظام حساب الطاقة المتجددة</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Furp Reneawble Energy Calculator</title>
   </head>
-  <body>
-    <div class="container" id="main-menu">
-      <h1>نظام حساب الطاقة المتجددة</h1>
-
-      <div class="menu-buttons">
-        <button onclick="showSolarBuildingCalculator()">
-          1. حاسبة المبنى (طاقة شمسية)
+  <body class="bg-black text-white font-tajawal">
+    <!-- Main menu -->
+    <div class="container mx-auto max-w-4xl p-5" id="main-menu">
+      <h1 class="text-accent text-2xl font-bold mb-5 text-center">
+        نظام حساب الطاقة المتجددة
+      </h1>
+      <div class="flex flex-col gap-4 my-8">
+        <button
+          onclick="showSolarBuildingCalculator()"
+          class="bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold text-center transition-colors"
+        >
+          حساب الطاقة الشمسية
         </button>
-        <button onclick="showWindBuildingCalculator()">
-          2. حاسبة المبنى (طاقة الرياح)
+        <button
+          onclick="showWindBuildingCalculator()"
+          class="bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold text-center transition-colors"
+        >
+          حاسبة المبنى طاقة الرياح
         </button>
-        <button onclick="showFeasibilityAnalysis()">
-          3. تحليل الجدوى الاقتصادية والبيئية
+        <button
+          onclick="showFeasibilityAnalysis()"
+          class="bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold text-center transition-colors"
+        >
+          تحليل الجدوى الاقتصادية والبيئية
         </button>
       </div>
     </div>
+    <!-- End of main menu -->
 
-    <!-- حاسبة المبنى (طاقة شمسية) -->
+    <!-- Solar Building Calculator -->
     <div
-      class="container calculator-container"
+      class="container mx-auto max-w-4xl p-5 hidden"
       id="solar-building-calculator"
-      style="display: none"
     >
-      <h2>حاسبة متطلبات الطاقة الشمسية للمباني</h2>
+      <h1 class="text-accent text-xl font-bold mb-5 text-center">
+        حاسبة متطلبات الطاقة الشمسية للمبني
+      </h1>
 
-      <div class="input-section">
-        <div class="input-group">
-          <label for="solar-area">مساحة المبنى (م²):</label>
+      <!-- do you have the total load -->
+      <div class="bg-cardbg p-5 rounded-lg mb-5" id="alreadyHaveLoad">
+        <h3 class="text-right text-white font-bold text-xl mr-2 mb-4">
+          هل لديك الحمل الإجمالي؟
+        </h3>
+        <div
+          class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+        >
+          <label for="solar-load" class="mr-2">الحمل (كيلو واط):</label>
           <input
             type="number"
-            id="solar-area"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-floors')"
+            id="solar-load"
+            class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
           />
         </div>
-
-        <div class="input-group">
-          <label for="solar-floors">عدد الأدوار:</label>
+        <div
+          class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+        >
+          <label for="solar-irradiance" class="mr-2">الاشعاع الشمسي:</label>
           <input
             type="number"
-            id="solar-floors"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-lights')"
+            value="5.5"
+            id="solar-irradiance"
+            class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full mb-4"
           />
         </div>
-      </div>
-
-      <h3>عدد الأجهزة:</h3>
-      <div class="devices-grid">
-        <div class="device-group">
-          <label for="solar-lights">المصابيح:</label>
-          <input
-            type="number"
-            id="solar-lights"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-coffee')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="solar-coffee">ماكينات القهوة:</label>
-          <input
-            type="number"
-            id="solar-coffee"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-computers')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="solar-computers">أجهزة الكمبيوتر:</label>
-          <input
-            type="number"
-            id="solar-computers"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-printers')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="solar-printers">الطابعات:</label>
-          <input
-            type="number"
-            id="solar-printers"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-fridge')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="solar-fridge">الثلاجات:</label>
-          <input
-            type="number"
-            id="solar-fridge"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-fans')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="solar-fans">المراوح:</label>
-          <input
-            type="number"
-            id="solar-fans"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-ac')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="solar-ac">أجهزة التكييف:</label>
-          <input
-            type="number"
-            id="solar-ac"
-            class="input-field"
-            onkeypress="handleEnter(event, 'solar-other')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="solar-other">أحمال أخرى:</label>
-          <input
-            type="number"
-            id="solar-other"
-            class="input-field"
-            onkeypress="handleEnter(event, '', 'calculateSolarBuilding')"
-          />
+        <div>
+          <button
+            onclick="showSpecificLoads()"
+            class="duration-300 ease-in-out bg-primary hover:bg-buttonhover text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+          >
+            ليس لدي
+          </button>
         </div>
       </div>
+      <!-- end of do you have the total load -->
 
-      <div class="button-group">
-        <button onclick="calculateSolarBuilding()" class="calculate-btn">
+      <!-- enter specific loads -->
+      <div id="specific-loads" class="hidden">
+        <h3 class="text-center text-white font-bold text-xl mb-4">
+          أدخل الأحمال المحددة
+        </h3>
+
+        <!-- building info -->
+        <div class="bg-cardbg p-5 rounded-lg mb-5">
+          <div
+            class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+          >
+            <label for="building-area" class="mr-2">مساحة المبنى (م²):</label>
+            <input
+              type="number"
+              id="building-area"
+              class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+          >
+            <label for="building-floors" class="mr-2">عدد الأدوار:</label>
+            <input
+              type="number"
+              id="building-floors"
+              class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+          >
+            <label for="solar-irradiance2" class="mr-2">الاشعاع الشمسي:</label>
+            <input
+              type="number"
+              value="5.5"
+              id="solar-irradiance2"
+              class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+        </div>
+        <!-- end of building info -->
+        <!-- devices info -->
+        <h3 class="text-center text-white font-bold text-xl mb-4">
+          أدخل معلومات الأجهزة
+        </h3>
+        <div
+          id="devices-solar"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5"
+        >
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="lamp-count" class="mr-2">المصابيح:</label>
+            <input
+              type="number"
+              id="lamp-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="coffee-count" class="mr-2">ماكينات القهوة:</label>
+            <input
+              type="number"
+              id="coffee-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="computer-count" class="mr-2">اجهزة الكمبيوتر:</label>
+            <input
+              type="number"
+              id="computer-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="printer-count" class="mr-2">الطابعات:</label>
+            <input
+              type="number"
+              id="printer-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="fridge-count" class="mr-2">الثلاجات:</label>
+            <input
+              type="number"
+              id="fridge-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="fan-count" class="mr-2">المراوح:</label>
+            <input
+              type="number"
+              id="fan-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="conditioning-count" class="mr-2">اجهزة التكييف:</label>
+            <input
+              type="number"
+              id="conditioning-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="other-count" class="mr-2">احمال اخري:</label>
+            <input
+              type="number"
+              id="other-count"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+        </div>
+        <!-- end of devices info -->
+        <button
+          onclick="backToTotalLoads()"
+          class="duration-300 ease-in-out bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+        >
+          العودة لقائمة الحمل الكلي
+        </button>
+      </div>
+
+      <!-- claculation buttons -->
+      <div class="flex flex-col md:flex-row justify-center gap-5 mt-8">
+        <button
+          onclick="calculateSolarBuilding()"
+          class="duration-300 ease-in-out bg-primary hover:bg-buttonhover text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+        >
           حساب
         </button>
-        <button onclick="showMainMenu()" class="back-btn">
+        <button
+          onclick="backToMainMenu()"
+          class="duration-300 ease-in-out bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+        >
           العودة للقائمة الرئيسية
         </button>
       </div>
+      <!-- end of claculation buttons -->
     </div>
+    <!-- end of solar -->
 
-    <!-- حاسبة المبنى (طاقة الرياح) -->
+    <!-- wind calculator -->
     <div
-      class="container calculator-container"
+      class="container mx-auto max-w-4xl p-5 hidden"
       id="wind-building-calculator"
-      style="display: none"
     >
-      <h2>حاسبة متطلبات طاقة الرياح للمباني</h2>
+      <h1 class="text-accent text-xl font-bold mb-5 text-center">
+        حاسبة متطلبات طاقة الرياح للمبني
+      </h1>
 
-      <div class="input-section">
-        <div class="input-group">
-          <label for="wind-area">مساحة المبنى (م²):</label>
+      <!-- do you have the total load -->
+      <div class="bg-cardbg p-5 rounded-lg mb-5" id="alreadyHaveLoadWind">
+        <h3 class="text-right text-white font-bold text-xl mr-2 mb-4">
+          هل لديك الحمل الإجمالي؟
+        </h3>
+        <div
+          class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+        >
+          <label for="wind-load" class="mr-2">الحمل (كيلو واط):</label>
           <input
             type="number"
-            id="wind-area"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-floors')"
+            id="wind-load"
+            class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
           />
         </div>
-
-        <div class="input-group">
-          <label for="wind-floors">عدد الأدوار:</label>
+        <div
+          class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+        >
+          <label for="wind-speed" class="mr-2">سرعة الرياح:</label>
           <input
             type="number"
-            id="wind-floors"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-speed')"
-          />
-        </div>
-
-        <div class="input-group">
-          <label for="wind-speed">سرعة الرياح المتوسطة (م/ث):</label>
-          <input
-            type="number"
+            value="4.5"
             id="wind-speed"
-            class="input-field"
-            value="6.5"
-            onkeypress="handleEnter(event, 'wind-diameter')"
+            class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full mb-4"
           />
         </div>
-
-        <div class="input-group">
-          <label for="wind-diameter">قطر التوربين (م):</label>
+        <div
+          class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+        >
+          <label for="wind-diam" class="mr-2">قطر التوربين (م):</label>
           <input
             type="number"
-            id="wind-diameter"
-            class="input-field"
             value="3"
-            onkeypress="handleEnter(event, 'wind-lights')"
+            id="wind-diam"
+            class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full mb-4"
           />
+        </div>
+        <div>
+          <button
+            onclick="showSpecificLoadsWind()"
+            class="duration-300 ease-in-out bg-primary hover:bg-buttonhover text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+          >
+            ليس لدي
+          </button>
         </div>
       </div>
+      <!-- end of do you have the total load -->
 
-      <h3>عدد الأجهزة:</h3>
-      <div class="devices-grid">
-        <div class="device-group">
-          <label for="wind-lights">المصابيح:</label>
-          <input
-            type="number"
-            id="wind-lights"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-coffee')"
-          />
-        </div>
+      <!-- enter specific loads -->
+      <div id="specific-loads-wind" class="hidden">
+        <h3 class="text-center text-white font-bold text-xl mb-4">
+          أدخل الأحمال المحددة
+        </h3>
 
-        <div class="device-group">
-          <label for="wind-coffee">ماكينات القهوة:</label>
-          <input
-            type="number"
-            id="wind-coffee"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-computers')"
-          />
+        <!-- building info -->
+        <div class="bg-cardbg p-5 rounded-lg mb-5">
+          <div
+            class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+          >
+            <label for="building-area-wind" class="mr-2"
+              >مساحة المبنى (م²):</label
+            >
+            <input
+              type="number"
+              id="building-area-wind"
+              class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+          >
+            <label for="building-floors-wind" class="mr-2">عدد الأدوار:</label>
+            <input
+              type="number"
+              id="building-floors-wind"
+              class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+          >
+            <label for="wind-speed2" class="mr-2">سرعة الرياح:</label>
+            <input
+              type="number"
+              value="4.5"
+              id="wind-speed2"
+              class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col md:items-center justify-between gap-4 mb-4 md:flex-row md:gap-2"
+          >
+            <label for="wind-diam2" class="mr-2">قطر التوربين (م):</label>
+            <input
+              type="number"
+              value="4.5"
+              id="wind-diam2"
+              class="bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
         </div>
-
-        <div class="device-group">
-          <label for="wind-computers">أجهزة الكمبيوتر:</label>
-          <input
-            type="number"
-            id="wind-computers"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-printers')"
-          />
+        <!-- end of building info -->
+        <!-- devices info -->
+        <h3 class="text-center text-white font-bold text-xl mb-4">
+          أدخل معلومات الأجهزة
+        </h3>
+        <div
+          id="devices-wind"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5"
+        >
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="lamp-count-wind" class="mr-2">المصابيح:</label>
+            <input
+              type="number"
+              id="lamp-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="coffee-count-wind" class="mr-2">ماكينات القهوة:</label>
+            <input
+              type="number"
+              id="coffee-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="computer-count-wind" class="mr-2"
+              >اجهزة الكمبيوتر:</label
+            >
+            <input
+              type="number"
+              id="computer-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="printer-count-wind" class="mr-2">الطابعات:</label>
+            <input
+              type="number"
+              id="printer-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="fridge-count-wind" class="mr-2">الثلاجات:</label>
+            <input
+              type="number"
+              id="fridge-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="fan-count-wind" class="mr-2">المراوح:</label>
+            <input
+              type="number"
+              id="fan-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="conditioning-count-wind" class="mr-2"
+              >اجهزة التكييف:</label
+            >
+            <input
+              type="number"
+              id="conditioning-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
+          <div
+            class="flex flex-col gap-4 md:flex-row justify-between md:items-center bg-cardbg p-3 rounded"
+          >
+            <label for="other-count-wind" class="mr-2">احمال اخري:</label>
+            <input
+              type="number"
+              id="other-count-wind"
+              class="device bg-inputbg text-green-400 border border-gray-600 py-2 px-3 rounded md:w-36 text-center w-full"
+            />
+          </div>
         </div>
-
-        <div class="device-group">
-          <label for="wind-printers">الطابعات:</label>
-          <input
-            type="number"
-            id="wind-printers"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-fridge')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="wind-fridge">الثلاجات:</label>
-          <input
-            type="number"
-            id="wind-fridge"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-fans')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="wind-fans">المراوح:</label>
-          <input
-            type="number"
-            id="wind-fans"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-ac')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="wind-ac">أجهزة التكييف:</label>
-          <input
-            type="number"
-            id="wind-ac"
-            class="input-field"
-            onkeypress="handleEnter(event, 'wind-other')"
-          />
-        </div>
-
-        <div class="device-group">
-          <label for="wind-other">أحمال أخرى:</label>
-          <input
-            type="number"
-            id="wind-other"
-            class="input-field"
-            onkeypress="handleEnter(event, '', 'calculateWindBuilding')"
-          />
-        </div>
+        <!-- end of devices info -->
+        <button
+          onclick="backToTotalLoadsWind()"
+          class="duration-300 ease-in-out bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+        >
+          العودة لقائمة الحمل الكلي
+        </button>
       </div>
 
-      <div class="button-group">
-        <button onclick="calculateWindBuilding()" class="calculate-btn">
+      <!-- claculation buttons -->
+      <div class="flex flex-col md:flex-row justify-center gap-5 mt-8">
+        <button
+          onclick="calculateWindBuilding()"
+          class="duration-300 ease-in-out bg-primary hover:bg-buttonhover text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+        >
           حساب
         </button>
-        <button onclick="showMainMenu()" class="back-btn">
+        <button
+          onclick="backToMainMenu()"
+          class="duration-300 ease-in-out bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+        >
           العودة للقائمة الرئيسية
         </button>
       </div>
+      <!-- end of claculation buttons -->
     </div>
 
-    <!-- تحليل الجدوى الاقتصادية والبيئية -->
-    <div
-      class="container calculator-container"
-      id="feasibility-analysis"
-      style="display: none"
-    >
-      <h2>تحليل محطة طاقة متجددة - إدخال البيانات</h2>
+    <!-- end of wind calculator -->
 
-      <div class="input-section">
-        <div class="input-group">
-          <label for="station-capacity">قدرة المحطة (كيلوواط):</label>
+    <!-- results model -->
+    <div
+      id="results-model"
+      class="hidden fixed z-10 left-0 top-0 w-full h-full bg-modalbg"
+    >
+      <div
+        class="bg-black border p-8 border-accent rounded-lg mx-auto mt-20 max-w-2xl relative"
+      >
+        <span
+          class="close-btn absolute left-5 top-3 text-white text-2xl font-bold cursor-pointer hover:text-aaccent"
+          onclick="closeModel()"
+        >
+          &times;
+        </span>
+        <h2
+          id="results-title"
+          class="text-accent text-xl font-bold mb-5 text-center"
+        ></h2>
+        <div
+          id="results-content"
+          class="text-right mt-5 leading-loose text-base"
+        ></div>
+        <button
+          id="feasability-btn"
+          class="bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold w-full mt-5"
+          onclick="showFeasibilityAnalysis()"
+        >
+          تحليل الجدوي الاقتصادية
+        </button>
+      </div>
+    </div>
+    <!-- end of results Model -->
+
+    <!-- feasability -->
+    <div
+      class="container max-w-4xl mx-auto p-5 hidden"
+      id="feasability-analysis"
+    >
+      <h1 class="text-accent text-xl font-bold mb-5 text-center">
+        تحليل الجدوي الاقتصادية لمحطة طاقة متجددة
+      </h1>
+      <div class="bg-cardbg w-full p-5 mx-auto rounded-lg mb-5">
+        <div
+          class="flex md:flex-row gap-4 flex-col justify-between md:items-center mb-5"
+        >
+          <label for="station-power">قدرة المحطة (كيلوواط)</label>
           <input
             type="number"
-            id="station-capacity"
-            class="input-field"
-            onkeypress="handleEnter(event, 'station-cost')"
+            id="station-power"
+            value="0.0"
+            class="bg-inputbg rounded text-green-400 border border-gray-600 py-2 px-3 md:w-36 w-full text-center"
           />
         </div>
-
-        <div class="input-group">
-          <label for="station-cost">تكلفة المحطة (جنيه):</label>
+        <div
+          class="flex md:flex-row gap-4 flex-col justify-between md:items-center"
+        >
+          <label for="station-cost">سعر المحطة (جنيه)</label>
           <input
             type="number"
             id="station-cost"
-            class="input-field"
-            onkeypress="handleEnter(event, '', 'calculateStationResults')"
+            value="0.0"
+            class="bg-inputbg rounded text-green-400 border border-gray-600 py-2 px-3 md:w-36 w-full text-center"
           />
         </div>
       </div>
-
-      <div class="button-group">
-        <button onclick="calculateStationResults()" class="calculate-btn">
-          حساب النتائج
-        </button>
-        <button onclick="showMainMenu()" class="back-btn">رجوع</button>
-      </div>
-    </div>
-
-    <!-- نتائج الحسابات -->
-    <div id="results-modal" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h2 id="results-title"></h2>
-        <div id="results-content"></div>
+      <!-- claculation buttons -->
+      <div class="flex flex-col md:flex-row justify-center gap-5 mt-8">
         <button
-          id="feasibility-btn"
-          class="feasibility-btn"
-          style="display: none"
-          onclick="showFeasibilityFromResults()"
+          onclick="calculateFeasability()"
+          class="duration-300 ease-in-out bg-primary hover:bg-buttonhover text-white py-3 px-5 rounded font-bold md:w-36 w-full"
         >
-          تحليل الجدوى الاقتصادية
+          حساب
+        </button>
+        <button
+          onclick="backToMainMenu()"
+          class="duration-300 ease-in-out bg-secondary hover:bg-gray-600 text-white py-3 px-5 rounded font-bold md:w-36 w-full"
+        >
+          العودة للقائمة الرئيسية
         </button>
       </div>
+      <!-- end of claculation buttons -->
     </div>
+    <!-- end of feasability -->
 
-    <script src="script.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>
